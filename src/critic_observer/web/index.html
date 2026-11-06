@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta
+      name="description"
+      content="Measure what critics contribute to review quality."
+    />
+    <title>Critic observer</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="64x64"
+      href="/assets/favicon.png"
+    />
+    <link rel="stylesheet" href="/assets/style.css" />
+    <script type="module" src="/assets/app.js"></script>
+  </head>
+  <body>
+    <div id="login-view" class="login-wrap" hidden>
+      <form id="login-form" class="login-panel">
+        <div class="brand-mark" aria-hidden="true">◈</div>
+        <p class="eyebrow">Critic observer</p>
+        <h1>Follow the evidence.</h1>
+        <p class="subtle">
+          See what each critic contributes, examine disagreements, and test a
+          better review team.
+        </p>
+        <label for="credential">Operator credential</label>
+        <input
+          id="credential"
+          type="password"
+          autocomplete="current-password"
+          required
+        />
+        <p class="help">
+          Use the operator credential configured for this server. Review clients
+          use a separate ingestion credential.
+        </p>
+        <button class="primary" type="submit">
+          Open dashboard <span aria-hidden="true">→</span>
+        </button>
+        <p id="login-error" class="error" role="alert"></p>
+      </form>
+    </div>
+    <div id="shell" class="shell" hidden>
+      <aside class="sidebar">
+        <a class="brand" href="#overview"
+          ><span class="brand-mark" aria-hidden="true">◈</span
+          ><span>Critic observer<small>Review intelligence</small></span></a
+        >
+        <nav aria-label="Main navigation">
+          <a href="#overview" data-page="overview"
+            ><span aria-hidden="true">▦</span> Overview</a
+          >
+          <a href="#assess" data-page="assess"
+            ><span aria-hidden="true">✓</span> Assess issues
+            <small id="assess-count" class="nav-count"></small
+          ></a>
+          <a href="#runs" data-page="runs"
+            ><span aria-hidden="true">≡</span> Review runs</a
+          >
+          <a href="#critics" data-page="critics"
+            ><span aria-hidden="true">◎</span> Critics</a
+          >
+          <a href="#disagreements" data-page="disagreements"
+            ><span aria-hidden="true">⇄</span> Disagreements</a
+          >
+          <a href="#rounds" data-page="rounds"
+            ><span aria-hidden="true">↳</span> Round value</a
+          >
+          <a href="#experiments" data-page="experiments"
+            ><span aria-hidden="true">◇</span> Experiments</a
+          >
+          <a href="#quality" data-page="quality"
+            ><span aria-hidden="true">◷</span> Data quality</a
+          >
+          <a href="#connect" data-page="connect"
+            ><span aria-hidden="true">⌁</span> Connect clients</a
+          >
+        </nav>
+        <div class="sidebar-foot">
+          <span class="dot"></span> Your server. Your evidence.<button
+            id="logout"
+            class="quiet"
+          >
+            Sign out
+          </button>
+        </div>
+      </aside>
+      <main>
+        <header class="topbar">
+          <span id="breadcrumb">Workspace / Overview</span
+          ><span class="connection"
+            ><span class="dot"></span
+            ><span id="connection-state">Connected</span></span
+          >
+        </header>
+        <div class="workspace">
+          <div
+            id="error-banner"
+            class="notice danger"
+            role="alert"
+            hidden
+          ></div>
+          <form id="filters" class="filters" aria-label="Review cohort">
+            <label
+              >Dataset<select name="dataset">
+                <option value="production">Production</option>
+                <option value="benchmark">Benchmark trials</option>
+                <option value="demo">Demonstration</option>
+                <option value="">All datasets</option>
+              </select></label
+            >
+            <label
+              >Project<input name="project" placeholder="All projects"
+            /></label>
+            <label
+              >Client<input name="client" placeholder="All clients"
+            /></label>
+            <label
+              >Review type<select name="review_type">
+                <option value="pull_request">Pull requests</option>
+                <option value="code">Code</option>
+                <option value="architecture">Architecture</option>
+                <option value="troubleshooting">Troubleshooting</option>
+              </select></label
+            >
+            <button type="submit">Apply</button>
+            <details class="more-filters">
+              <summary>More filters</summary>
+              <div class="filter-extra">
+                <label
+                  >Experiment<select name="experiment_id">
+                    <option value="">All experiments</option>
+                  </select></label
+                >
+                <label
+                  >Variant<select name="variant_id">
+                    <option value="">All variants</option>
+                  </select></label
+                >
+                <label
+                  >Case<select name="case_id">
+                    <option value="">All cases</option>
+                  </select></label
+                >
+                <label
+                  >Skill revision<input
+                    name="skill_revision"
+                    placeholder="All revisions" /></label
+                ><label
+                  >Complexity<select name="complexity">
+                    <option value="">All</option>
+                    <option>small</option>
+                    <option>medium</option>
+                    <option>high</option>
+                  </select></label
+                ><label>Since<input name="since" type="date" /></label
+                ><label>Until<input name="until" type="date" /></label>
+              </div>
+            </details>
+          </form>
+          <p id="cohort-summary" class="help"></p>
+          <div id="content" aria-live="polite"></div>
+          <footer class="page-foot">
+            Agreement is an observation. Correctness needs independent evidence.
+            <span id="metric-version"></span>
+          </footer>
+        </div>
+      </main>
+    </div>
+    <dialog id="editor">
+      <div class="dialog-header">
+        <h2 id="editor-title"></h2>
+        <button id="close-editor" class="icon-button" aria-label="Close dialog">
+          ×
+        </button>
+      </div>
+      <div id="editor-body"></div>
+    </dialog>
+    <div id="toast" role="status" hidden></div>
+  </body>
+</html>

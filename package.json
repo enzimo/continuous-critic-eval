@@ -1,0 +1,12 @@
+{
+  "name": "critic-observer-ui-checks",
+  "private": true,
+  "scripts": {
+    "format": "prettier --write src/critic_observer/web",
+    "format:check": "prettier --check src/critic_observer/web",
+    "check": "node --check src/critic_observer/web/app.js"
+  },
+  "devDependencies": {
+    "prettier": "3.9.10"
+  }
+}

@@ -1,0 +1,27 @@
+**/discard*
+**/__pycache__/**
+nocheck.md
+**/.DS_Store/**
+**/deleteme*
+.env
+debug.env
+*.log
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+__pycache__/
+.local/
+dist/
+build/
+*.sqlite3*
+playwright-report/
+test-results/
+node_modules/
+
+# Generated reports and runtime state are private.
+.env.*
+*.db
+*.db-wal
+*.db-shm
+*.bundle

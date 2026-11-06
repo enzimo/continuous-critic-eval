@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>Critic observer</title>
+  <rect width="64" height="64" rx="15" fill="#101b2b"/>
+  <path d="M9 32s8-15 23-15 23 15 23 15-8 15-23 15S9 32 9 32Z"
+        stroke="#2dd4bf" stroke-width="5" stroke-linejoin="round"/>
+  <path d="m23 32 6 6 12-13" stroke="#f8fafc" stroke-width="5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="51" cy="13" r="6" fill="#fbbf24"/>
+</svg>

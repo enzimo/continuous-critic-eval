@@ -1,0 +1,22 @@
+include LICENSE README.md QUICKSTART.md AGENTS.md GOTCHAS.md TODO.md
+include REVIEW-PRINCIPLES.md SKILL.md requirements.lock Dockerfile
+include .dockerignore .gitignore package.json package-lock.json
+recursive-include architecture *.md
+recursive-include code *.md
+recursive-include pull-requests *.md
+recursive-include troubleshooting *.md
+recursive-include references *.md
+recursive-include docs *.md
+recursive-include ui *.md
+recursive-include assets *.svg *.png
+recursive-include deploy *.md *.yml
+recursive-include scripts *.py
+recursive-include tests *.py
+recursive-include data *.py *.md
+prune .git
+prune .local
+prune .venv
+prune node_modules
+global-exclude *.pyc
+global-exclude *.sqlite3*
+global-exclude *.log

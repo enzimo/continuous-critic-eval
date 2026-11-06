@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  observer:
+    image: ${OBSERVER_IMAGE:?Set OBSERVER_IMAGE to the pushed image tag or digest}
+    environment:
+      OBSERVER_PUBLIC_URL: ${OBSERVER_PUBLIC_URL:?Set the exact browser and MCP origin}
+      OBSERVER_ADMIN_TOKEN_FILE: /run/secrets/observer_admin_token
+      OBSERVER_INGEST_TOKEN_FILE: /run/secrets/observer_ingest_token
+      OBSERVER_DATABASE: /data/observer.sqlite3
+    secrets:
+      - source: observer_admin_token
+        target: observer_admin_token
+        uid: "10001"
+        gid: "10001"
+        mode: 0400
+      - source: observer_ingest_token
+        target: observer_ingest_token
+        uid: "10001"
+        gid: "10001"
+        mode: 0400
+    volumes:
+      - observer_data:/data
+    ports:
+      - target: 8000
+        published: ${OBSERVER_PORT:-8000}
+        protocol: tcp
+        mode: host
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    stop_grace_period: 30s
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == ${OBSERVER_STORAGE_NODE:?Set the node hostname that owns the database}
+      update_config:
+        parallelism: 1
+        order: stop-first
+        failure_action: rollback
+      rollback_config:
+        parallelism: 1
+        order: stop-first
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+      resources:
+        reservations:
+          memory: 128M
+        limits:
+          memory: 512M
+          cpus: "1.0"
+
+volumes:
+  observer_data:
+    driver: local
+
+secrets:
+  observer_admin_token:
+    external: true
+  observer_ingest_token:
+    external: true
